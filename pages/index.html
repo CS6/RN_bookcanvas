@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <meta charset="utf-8">
+        <style>
+                /* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+                html,
+                body,
+                div,
+                span,
+                applet,
+                object,
+                iframe,
+                h1,
+                h2,
+                h3,
+                h4,
+                h5,
+                h6,
+                p,
+                blockquote,
+                pre,
+                a,
+                abbr,
+                acronym,
+                address,
+                big,
+                cite,
+                code,
+                del,
+                dfn,
+                em,
+                img,
+                ins,
+                kbd,
+                q,
+                s,
+                samp,
+                small,
+                strike,
+                strong,
+                sub,
+                sup,
+                tt,
+                var,
+                b,
+                u,
+                i,
+                center,
+                dl,
+                dt,
+                dd,
+                ol,
+                ul,
+                li,
+                fieldset,
+                form,
+                label,
+                legend,
+                table,
+                caption,
+                tbody,
+                tfoot,
+                thead,
+                tr,
+                th,
+                td,
+                article,
+                aside,
+                canvas,
+                details,
+                embed,
+                figure,
+                figcaption,
+                footer,
+                header,
+                hgroup,
+                menu,
+                nav,
+                output,
+                ruby,
+                section,
+                summary,
+                time,
+                mark,
+                audio,
+                video {
+                        margin: 0;
+                        padding: 0;
+                        border: 0;
+                        font-size: 100%;
+                        font: inherit;
+                        vertical-align: baseline;
+                }
+
+                /* HTML5 display-role reset for older browsers */
+                article,
+                aside,
+                details,
+                figcaption,
+                figure,
+                footer,
+                header,
+                hgroup,
+                menu,
+                nav,
+                section {
+                        display: block;
+                }
+
+                body {
+                        line-height: 1;
+                }
+
+                ol,
+                ul {
+                        list-style: none;
+                }
+
+                blockquote,
+                q {
+                        quotes: none;
+                }
+
+                blockquote:before,
+                blockquote:after,
+                q:before,
+                q:after {
+                        content: '';
+                        content: none;
+                }
+
+                table {
+                        border-collapse: collapse;
+                        border-spacing: 0;
+                }
+        </style>
+</head>
+
+<body>
+        hello world hello world
+        hello world
+        hello world
+        hello world
+        hello world
+        hello world
+        hello world
+        hello world
+        hello world
+        hello world
+        <Button id='cacl'>计算</Button> <span>AB相加为</span><span id='sum'></span>
+
+
+        <script>
+
+
+
+                var bt = document.getElementById('cacl');
+                bt.addEventListener('click', function () {
+                        window.postMessage("A")
+                });
+                document.addEventListener('message', function (e) {
+                        example = JSON.parse(e.data).result;
+
+                        var text = "眼前这位咽了一口口水的少女，名字是，叫啥来着？忘了。的少女，名字是，叫啥来着？忘了的少女，名字是，叫啥来着？忘了";
+                        while (document.body.childNodes.length) document.body.removeChild(document.body.childNodes[0]);
+                        var canvas = document.createElement("canvas");
+                        //     canvas.width=500;
+                        //     canvas.height=700;
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
+                        document.body.appendChild(canvas);
+                        var context = canvas.getContext("2d");
+                        context.font = "40px sans-serif";
+                        context.fillStyle = "black";
+                        context.fillRect(0, 0, canvas.width, canvas.height);
+                        context.fillStyle = "skyblue";;//文字色ㄌ
+                        let all_mun = 0;
+                        let fontSize = 40;
+                        let fontSpace = fontSize + 5;
+                        let fontVertical_mun = canvas.height / fontSpace
+                        let fontHorizon_mun = canvas.width / fontSpace
+                        let fontRow_mun = Math.floor(fontHorizon_mun);
+
+                        let fontLine_mun = Math.floor(fontVertical_mun);
+                        let text_point = 0;
+                        for (var w = 0; w < fontRow_mun; w++) {
+                                
+                                //context.fillText("王", 280 - w * 25, 25);
+                                for (var h = 0; h < fontLine_mun; h++) {
+                                        // var char = example[(w * (fontLine_mun - 1)) + h];///h=1-37:char=0-36
+                                        var char = example[text_point];///h=1-37:char=0-36
+
+                                        if (char == "@") {
+                                                if (example[((w * (fontLine_mun - 1)) + h) + 1] == "\n") {
+                                                        text_point = text_point + 2
+                                                        break;
+                                                }
+                                                text_point = text_point + 2
+                                                break;
+
+                                        }
+                                        text_point++
+                                        if (char == " ") {
+                                                context.fillText("fontRow_mun", 30, 950);
+
+                                        }
+                                        context.fillText(char || "", (canvas.width - fontSpace) - (w * (fontSpace)), (h + 1) * (fontSpace)); // w-自寬
+                                        // all_mun++;
+                                        // if (char == "。"||char == "?"||char == "？") {
+                                        //         break;
+                                        // }
+                                        // if ("。?？".indexOf(char) > -1) {
+                                        //         break;
+                                        // }
+                                        // if (/。|\?|？/.test(char)) break;
+                                }
+                        }
+                        context.fillText(fontVertical_mun, 30, 1500);
+                        context.fillText(fontHorizon_mun, 50, 1600);
+                        context.fillText(fontLine_mun, 60, 1550);
+                        context.fillText(fontRow_mun, 100, 1650);
+
+                        context.fillText("X", canvas.width - fontSpace, fontSpace);
+
+                        window.postMessage(text_point);
+
+                })
+
+
+
+
+
+        </script>
+
+</body>
+
+</html>

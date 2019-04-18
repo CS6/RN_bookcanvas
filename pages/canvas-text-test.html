@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Messaging Test</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name ="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+    <!-- <meta name="viewport" content="width=320, user-scalable=no"> -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Noto+Serif+TC" rel="stylesheet"> -->
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            /* flex-direction: column; */
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        article {
+            font-size: 15px;
+            line-height: 2;
+            letter-spacing: 2px;
+            white-space: pre-wrap;
+            writing-mode: vertical-rl;
+            height: 100vh;
+            min-width: 100vw;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: Noto_Serif_TC;
+            src: url(./Noto_Serif/NotoSerifCJKtc-Medium.otf);
+        }
+        @font-face {
+            font-family: HiraMinProN-W3;
+            src: url(./HiraMinPro/HiraMinProN-W3.otf);
+        }
+    </style>
+</head>
+
+
+<body>
+        <div style="display:flex; flex-direction: column">
+
+    <div style="display: none">
+        <h1 id="error"></h1>
+        <h1 id="wwww"></h1>
+
+    </div>
+    <div style="flex:1">
+
+    <article >dfghjh第一章gfd第一章第一章第第一章第一章第一章第一章第一章第一章第一章第一章第一章第一章一章第一章第一章第一章第一章第一章第一章</article>
+<!-- </div>
+</div> -->
+
+</body>
+<script type="text/javascript">
+    // document.getElementById("error").innerHTML="viewWidth";
+    // document.getElementById("wwww").innerHTML="clientWidth";
+
+    var article = (container => ({
+        set content(text) {
+            container.innerText = text;
+        },
+        setContent(text, i = 0) {
+            var viewWidth = window.innerWidth;
+            // document.getElementById("error").innerHTML=viewWidth;
+
+            var lines = text.split("\n");
+    // article.content = `# 第一章 JJ%%%` ;
+
+            with (container) while (childNodes.length) removeChild(childNodes[0]);
+
+            for (; i < lines.length; i++) {
+                var textNode = document.createTextNode(lines[i] + "\n");
+                container.appendChild(textNode);
+
+                if (container.clientWidth > viewWidth) {
+                    container.removeChild(textNode);
+                    break;
+                }
+            }
+            // document.getElementById("error").innerHTML=container.clientWidth + "/" + viewWidth
+
+            postMessage(i);
+        },
+        get style() { return container.style; },
+        set style(style) {
+            for (var name in style) document.body.style[name] = style[name];
+        }
+    }))(document.body.getElementsByTagName("article")[0]);
+    document.addEventListener("message", ({ data }) => {
+        data = JSON.parse(data);
+        if (data.content) article.setContent(data.content, data.index);
+        if (data.style) article.style = data.style;
+    });
+    // article.content = `# 第一章 JJ%%%` ;
+
+</script>
